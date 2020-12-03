@@ -25,12 +25,16 @@ public synchronized void setId(Long id) {
   this.id = id;
 }
 // 锁对象,锁定对象
-public synchronized void setId(Long id) {
-  this.id = id;
+public void setId(Long id) {
+  synchronized (this) {
+    this.id = id;
+  }
 }
-// 类锁,绥定该类的实例
-synchronized (TestSync.class) {
-  this.id = id;
+// 类锁,锁该类的实例
+public void setId(Long id) {
+  synchronized (Test.class) {
+    this.id = id;
+  }
 }
 ```
 

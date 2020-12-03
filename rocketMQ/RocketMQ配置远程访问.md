@@ -10,8 +10,8 @@ brokerIP1=xxx.xxx.xxx.xxx
 ```
 
 ```shell
-[root@VM-0-4-centos tool]sh bin/mqnamesrv & //启动nameserver
-[root@VM-0-4-centos tool]sh bin/mqbroker -n 127.0.0.1:9876 & //启动broker
+sh bin/mqnamesrv & //启动nameserver
+sh bin/mqbroker -n 127.0.0.1:9876 & //启动broker
 ```
 
 ##### No route info of this topic, TopicTest 错误

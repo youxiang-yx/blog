@@ -4,9 +4,9 @@ HashMap是java常用的key，value类型的数据存储结构，其内部使用�
 
 ##### HashMap数据结构图
 
-|        0         |     1     |     2     |           3            |     4     |     5     |
-| :--------------: | :-------: | :-------: | :--------------------: | :-------: | :-------: |
-| 8Node&lt;K,V&gt; | Node<K,V> | Node<K,V> | size >=8 TreeNode<K,V> | Node<K,V> | Node<K,V> |
+|        0         |     1     |     2     |                       3                       |     4     |     5     |
+| :--------------: | :-------: | :-------: | :-------------------------------------------: | :-------: | :-------: |
+| 8Node&lt;K,V&gt; | Node<K,V> | Node<K,V> | (size >=8 && table.length > 64) TreeNode<K,V> | Node<K,V> | Node<K,V> |
 
 #### HashMap 属性说明
 
@@ -37,30 +37,31 @@ transient Node<K,V>[] table;
 int threshold;
 ```
 
-#### 添加内容源码分析
+#### PUT源码分析
 
 ````java
-// 添加内容方法
+//put
 public V put(K key, V value) {
-  // 通过对key的hash运算，计算出该key存放在数组中的下标
+  // 计算出key的hash值
   return putVal(hash(key), key, value, false, true);
 }
 
+//对key进行hash运算
 static final int hash(Object key) {
   int h;
-  // 这里只是计算出需要存放的位置，但不是数组中具体的下标
+  // 这里只是计算出key的hash值，不是数组中具体的下标
   return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
-
+//put val
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                boolean evict) {
   // 初始化变量
   Node<K,V>[] tab; Node<K,V> p; int n, i;
-  // 将table赋值给tab，这里是引用赋值，所以修改tab也就是修改table的引用对象
+  // 将table赋值给tab，这里是引用赋值，所以修改tab也就是修改table对象
   // 如果 table 等于空或者长度等于0就会进行初始化，调用resize方法
   if ((tab = table) == null || (n = tab.length) == 0)
     n = (tab = resize()).length;
-  // 第一部分是计算添加内容的具体存放下标，也就是table的下标。如果下标的值等于null，就直接创建一个新的链表，添加第一个值。
+  // 第一部分是计算添加内容的具体存放下标，也就是table的下标。如果下标的值等于null，就创建一个新的链表，添加第一个值。
   if ((p = tab[i = (n - 1) & hash]) == null)
     tab[i] = newNode(hash, key, value, null);
   else {
@@ -78,7 +79,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
       for (int binCount = 0; ; ++binCount) {
         //找到了最后一个内容
         if ((e = p.next) == null) {
-          // 创建一个新的内容，添加后最后
+          // 创建一个新的内容，添加到最后
           p.next = newNode(hash, key, value, null);
           // 如果链表的长度大于TREEIFY_THRESHOLD也就是8，就将链表转换成红黑树，但是treeifyBin里面会判断数组长度是否大于MIN_TREEIFY_CAPACITY
           // 如果小于MIN_TREEIFY_CAPACITY就会扩容，大于就会转红黑树

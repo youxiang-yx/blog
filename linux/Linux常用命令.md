@@ -4,19 +4,20 @@
 
 ```shell
 //同步本地文件至远程服务器
-[root@VM-0-4-centos tool]rsync -avz /var/tool/apache-maven-3.6.3-bin.tar.gz root@服务器IP:/var/tool/
+scp 本地文件的目录 root@服务器ip:服务器目录
 //同步远程文件至本地
-[root@VM-0-4-centos tool]rsync -avz --progress --partial root@服务器IP:/var/tool/apache-maven-3.6.3-bin.tar.gz ./
-
+scp root@服务器ip:服务器目录 本地文件的目录
 ```
 
 ##### 系统常用命令
 
 ````shell
 //查看端口是否被使用
-[root@VM-0-4-centos tool]lsof -i:端口
-//搜索进程是否启动
-[root@VM-0-4-centos tool]ps -aux |grep 进程名字
+lsof -i:端口
+//搜索进程
+ps -aux |grep 进程名字
+//切换用户
+su 用户名
 ````
 
 

@@ -6,14 +6,14 @@
 
 ```shell
 //下载rocketMQ
-[root@VM-0-4-centos tool]wget https://mirror.bit.edu.cn/apache/rocketmq/4.7.1/rocketmq-all-4.7.1-source-release.zip 
+wget https://mirror.bit.edu.cn/apache/rocketmq/4.7.1/rocketmq-all-4.7.1-source-release.zip 
 //解压文件
-[root@VM-0-4-centos tool]unzip rocketmq-all-4.7.1-source-release.zip 
-[root@VM-0-4-centos tool]cd rocketmq-all-4.7.1-source-release
+unzip rocketmq-all-4.7.1-source-release.zip 
+cd rocketmq-all-4.7.1-source-release
 //编译安装rocketMQ
-[root@VM-0-4-centos tool]mvn -Prelease-all -DskipTests clean install -U //编译rocket
+mvn -Prelease-all -DskipTests clean install -U //编译rocket
 //将编译好的rocketMQ移动道/usr/local目录下
-[root@VM-0-4-centos tool]mv distribution/target/rocketmq-4.7.1/rocketmq-4.7.1 /usr/local/rocketMQ
+mv distribution/target/rocketmq-4.7.1/rocketmq-4.7.1 /usr/local/rocketMQ
 ```
 
 #### 启动rocketMQ
@@ -29,8 +29,8 @@ JAVA_OPT="${JAVA_OPT} -server -Xms4g -Xmx4g -Xmn2g -XX:MetaspaceSize=128m -XX:Ma
 ```
 
 ```shell
-[root@VM-0-4-centos tool]sh bin/mqnamesrv & //启动nameserver
-[root@VM-0-4-centos tool]sh bin/mqbroker -n 127.0.0.1:9876 & //启动broker
+sh bin/mqnamesrv & //启动nameserver
+sh bin/mqbroker -n 127.0.0.1:9876 & //启动broker
 ```
 
 ### 停止rocketMQ
